@@ -22,15 +22,15 @@ public class BossBar {
     }
 
     public void update(String message, float live) {
-        Vector vector = new Vector().toLocation(player.getLocation().getWorld(), player.getLocation().getYaw(), player.getLocation().getPitch()).getDirection();
+        Vector vector = player.getLocation().getDirection();
         Location location = player.getLocation().add(vector.multiply(20));
         removWither();
         WorldServer world = ((CraftWorld) location.getWorld()).getHandle();
         wither = new EntityWither(world);
-        wither.setLocation(location.getX(), location.getY(), location.getZ(), location.getPitch(), location.getYaw());
+        wither.setLocation(location.getX(), player.getLocation().getY(), location.getZ(), location.getPitch(), location.getYaw());
         wither.setCustomName(message);
         wither.setCustomNameVisible(true);
-        wither.setHealth(live * 100 / wither.getMaxHealth());
+        wither.setHealth(live * wither.getMaxHealth() / 100);
         wither.setInvisible(true);
         wither.r(10000000);
         PacketPlayOutSpawnEntityLiving packet = new PacketPlayOutSpawnEntityLiving(wither);
