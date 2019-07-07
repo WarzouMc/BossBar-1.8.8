@@ -16,12 +16,11 @@ public class Updaters extends BukkitRunnable {
 
     @Override
     public void run() {
+        String msg = "boss bar";
+        int i = 3;
+        int max = 4;
         for (BossBar bar : main.getBar().values()) {
-            if(main.getgStatue() == GStatue.WAITING || main.getgStatue() == GStatue.STARTING){
-                bar.update("§cWaiting more player : §e" + main.getPlayerInGame().size() + "/8", 100 * main.getPlayerInGame().size() / 8);
-            }else {
-                bar.update(main.getBossMsg(), main.getBossInt());
-            }
+            bar.update(msg, 100 * i / max);
         }
     }
 }
