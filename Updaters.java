@@ -20,7 +20,7 @@ public class Updaters extends BukkitRunnable {
         int i = 3;
         int max = 4;
         for (BossBar bar : main.getBar().values()) {
-            bar.update(msg, 100 * i / max);
+            bar.getValue().update(bar.getKey(), msg, 100 * i / max);
         }
     }
 }
