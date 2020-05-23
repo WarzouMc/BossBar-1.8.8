@@ -122,7 +122,8 @@ public class BossBar {
     }
 
     public void reset() {
-        sendPacket(new PacketPlayOutEntityDestroy(this.entityWither.getId()));
+        if (this.entityWither != null)
+            sendPacket(new PacketPlayOutEntityDestroy(this.entityWither.getId()));
         bossBarMap.put(this.player.getUniqueId(), new BossBar(this.player));
     }
 
@@ -172,6 +173,13 @@ public class BossBar {
     }
 
     public static Map<UUID, BossBar> getBossBarMap() {
+        Map<UUID, BossBar> tempBossBarMap = new HashMap<>(bossBarMap);
+        tempBossBarMap.forEach((uuid, bossBar) -> {
+            if (!Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(uuid))) {
+                bossBar.reset();
+                bossBarMap.remove(uuid);
+            }
+        });
         return bossBarMap;
     }
 
